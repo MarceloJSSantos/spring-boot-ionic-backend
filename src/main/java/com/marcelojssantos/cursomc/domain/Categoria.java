@@ -2,14 +2,22 @@ package com.marcelojssantos.cursomc.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /*
  * implements Serializable: faz com que a class possa ser convertida em bytes
  * podendo ser encaminhada por rede ou para arquivos
  * devemos adicionar um "serialVersionUID"
  */
+@Entity
 public class Categoria implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	//atributos
 	private Integer id;
 	private String nome;
