@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /*
  * implements Serializable: faz com que a class possa ser convertida em bytes
  * podendo ser encaminhada por rede ou para arquivos
@@ -25,6 +27,7 @@ public class Categoria implements Serializable{
 	private Integer id;
 	private String nome;
 	
+	@JsonManagedReference // Para quando for retornar o Json processa os produtos
 	// Iniciamos uma coleção de Produtos para associação 1 Categoria p/ * Produtos
 	// relacionamento muito(*) p/ muitos(*), aproveitando o mapeamento já feito do "outro lado"
 	@ManyToMany(mappedBy = "categorias")
