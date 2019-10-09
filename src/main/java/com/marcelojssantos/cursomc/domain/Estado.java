@@ -20,7 +20,7 @@ public class Estado implements Serializable{
 	private Integer id;
 	private String nome;
 	
-	// estado tem várias cidades (por isso 'List<Cidade>')
+	// 'Estado' tem várias 'Cidade' (por isso 'List<Cidade>')
 	@OneToMany(mappedBy = "estado")
 	private List<Cidade> cidades = new ArrayList<>();
 	
@@ -60,6 +60,7 @@ public class Estado implements Serializable{
 		this.cidades = cidades;
 	}
 
+	//métodos hashCode e equals
 	@Override
 	public int hashCode() {
 		final int prime = 31;
