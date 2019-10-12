@@ -46,6 +46,11 @@ public class Cliente implements Serializable{
 	@CollectionTable(name="telefone") // define a tabela no BD
 	private Set<String> telefones = new HashSet<>();
 	
+	@OneToMany(mappedBy = "cliente")
+	//'Cliente' tem vários 'Pedido' (por isso 'List<Endereco>')
+	//por fim instanciamos com a implementação de um 'ArrayList<>()'
+	private List<Pedido> pedidos = new ArrayList<>();
+	
 	//construtores
 	public Cliente() {
 	}
@@ -118,6 +123,14 @@ public class Cliente implements Serializable{
 		this.telefones = telefones;
 	}
 
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+	
 	//métodos hashCode e equals
 	@Override
 	public int hashCode() {

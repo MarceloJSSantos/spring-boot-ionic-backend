@@ -1,5 +1,6 @@
 package com.marcelojssantos.cursomc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,20 @@ import com.marcelojssantos.cursomc.domain.Cidade;
 import com.marcelojssantos.cursomc.domain.Cliente;
 import com.marcelojssantos.cursomc.domain.Endereco;
 import com.marcelojssantos.cursomc.domain.Estado;
+import com.marcelojssantos.cursomc.domain.Pagamento;
+import com.marcelojssantos.cursomc.domain.PagamentoComBoleto;
+import com.marcelojssantos.cursomc.domain.PagamentoComCartao;
+import com.marcelojssantos.cursomc.domain.Pedido;
 import com.marcelojssantos.cursomc.domain.Produto;
+import com.marcelojssantos.cursomc.domain.enums.EstadoPagamento;
 import com.marcelojssantos.cursomc.domain.enums.TipoCliente;
 import com.marcelojssantos.cursomc.repositories.CategoriaRepository;
 import com.marcelojssantos.cursomc.repositories.CidadeRepository;
 import com.marcelojssantos.cursomc.repositories.ClienteRepository;
 import com.marcelojssantos.cursomc.repositories.EnderecoRepository;
 import com.marcelojssantos.cursomc.repositories.EstadoRepository;
+import com.marcelojssantos.cursomc.repositories.PagamentoRepository;
+import com.marcelojssantos.cursomc.repositories.PedidoRepository;
 import com.marcelojssantos.cursomc.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -36,6 +44,10 @@ public class CursomcApplication implements CommandLineRunner {
 	private ClienteRepository clienteRepository;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -67,9 +79,12 @@ public class CursomcApplication implements CommandLineRunner {
 		prod3.getCategorias().addAll(Arrays.asList(cat1));
 		prod4.getCategorias().addAll(Arrays.asList(cat3));
 		
-		//adicionamos uma lista de 'Categoria' no BD usando seu repository
+		//após criar o repository
+		//adiciona uma lista de 'Categoria' no BD usando seu repository
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
-		//adicionamos uma lista de 'Produto' no BD usando seu repository
+		
+		//após criar o repository
+		//adiciona uma lista de 'Produto' no BD usando seu repository
 		produtoRepository.saveAll(Arrays.asList(prod1,prod2,prod3,prod4));
 		
 		//cria os objetos 'Estado'
@@ -90,10 +105,13 @@ public class CursomcApplication implements CommandLineRunner {
 		est2.getCidades().addAll(Arrays.asList(cid2, cid3));
 		est3.getCidades().addAll(Arrays.asList(cid4, cid5));
 		
-		//adicionamos uma lista de 'Estado' no BD usando seu repository
+		//após criar o repository
+		//adiciona uma lista de 'Estado' no BD usando seu repository
 		//primeiro o 'Estado' pois outros objetos dependem dele
 		estadoRepository.saveAll(Arrays.asList(est1, est2, est3));
-		//adicionamos uma lista de 'Cidade' no BD usando seu repository
+		
+		//após criar o repository
+		//adiciona uma lista de 'Cidade' no BD usando seu repository
 		cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3, cid4, cid5));
 		
 		//cria os objetos 'Cliente'
@@ -114,10 +132,41 @@ public class CursomcApplication implements CommandLineRunner {
 		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
 		cli2.getEnderecos().addAll(Arrays.asList(end3, end4));
 		
-		//adicionamos uma lista de 'Cliente' no BD usando seu repository
+		//após criar os repositories
+		//adiciona uma lista de 'Cliente' no BD usando seu repository
 		//primeiro o 'Cliente' pois outros objetos (endereco) dependem dele 
 		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
-		//adicionamos uma lista de 'Endereco' no BD usando seu repository
+		
+		//após criar o repository
+		//adiciona uma lista de 'Endereco' no BD usando seu repository
 		enderecoRepository.saveAll(Arrays.asList(end1, end2, end3, end4));
-		}
+		
+		//máscara de formatação para um 'instante' dia e horário
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		
+		//cria os objetos 'Pedido'
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32:05"), cli1, end1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35:45"), cli1, end2);
+		Pedido ped3 = new Pedido(null, sdf.parse("12/10/2019 03:12:25"), cli2, end3);
+		
+		//cria os objetos 'Pagamento' e define um 'Pagamento' para seu 'Pedido'
+		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pagto1);
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00:00"), null);
+		ped2.setPagamento(pagto2);
+		Pagamento pagto3 = new PagamentoComBoleto(null, EstadoPagamento.QUITADO, ped3, sdf.parse("14/10/2019 00:00:00"), sdf.parse("12/10/2019 00:00:00"));
+		ped3.setPagamento(pagto3);
+		
+		// associa os 'Pedido' ao 'Cliente'
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		cli2.getPedidos().addAll(Arrays.asList(ped3));
+		
+		//após criar o repository
+		//adiciona uma lista de 'Pedido' no BD usando seu repository
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2, ped3));
+		
+		//após criar o repository (basta criar da SuperClass)
+		//adiciona uma lista de 'Pagamento' no BD usando seu repository
+		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2, pagto3));
+	}
 }
