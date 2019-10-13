@@ -15,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Pedido implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -23,21 +26,26 @@ public class Pedido implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private Integer id;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date instante;
+	
+	@JsonManagedReference // trata referência cíclica (mostra os endereços para 1 cliente)
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
+	private Pagamento pagamento;
+	
+	@JsonManagedReference // trata referência cíclica (mostra os itens para 1 pedido)
+	@OneToMany(mappedBy = "id.pedido") // atenção classe auxiliar
+	private Set<ItemPedido> itens = new HashSet<>();
 	
 	@ManyToOne //mesmo o 'Endereco' não conhecendo o pedido
 	@JoinColumn(name="endereco_de_entrega_id")
 	private Endereco enderecoDeEntrega;
 	
+	@JsonManagedReference // trata referência cíclica (mostra os endereços para 1 cliente)
 	@ManyToOne
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
-	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
-	private Pagamento pagamento;
-	
-	@OneToMany(mappedBy = "id.pedido") // atenção classe auxiliar
-	private Set<ItemPedido> itens = new HashSet<>();
 	
 	//contrutores
 	public Pedido() {
