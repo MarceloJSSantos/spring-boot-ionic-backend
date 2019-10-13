@@ -13,6 +13,7 @@ import com.marcelojssantos.cursomc.domain.Cidade;
 import com.marcelojssantos.cursomc.domain.Cliente;
 import com.marcelojssantos.cursomc.domain.Endereco;
 import com.marcelojssantos.cursomc.domain.Estado;
+import com.marcelojssantos.cursomc.domain.ItemPedido;
 import com.marcelojssantos.cursomc.domain.Pagamento;
 import com.marcelojssantos.cursomc.domain.PagamentoComBoleto;
 import com.marcelojssantos.cursomc.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.marcelojssantos.cursomc.repositories.CidadeRepository;
 import com.marcelojssantos.cursomc.repositories.ClienteRepository;
 import com.marcelojssantos.cursomc.repositories.EnderecoRepository;
 import com.marcelojssantos.cursomc.repositories.EstadoRepository;
+import com.marcelojssantos.cursomc.repositories.ItemPedidoRepository;
 import com.marcelojssantos.cursomc.repositories.PagamentoRepository;
 import com.marcelojssantos.cursomc.repositories.PedidoRepository;
 import com.marcelojssantos.cursomc.repositories.ProdutoRepository;
@@ -48,6 +50,8 @@ public class CursomcApplication implements CommandLineRunner {
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -168,5 +172,27 @@ public class CursomcApplication implements CommandLineRunner {
 		//após criar o repository (basta criar da SuperClass)
 		//adiciona uma lista de 'Pagamento' no BD usando seu repository
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2, pagto3));
+		
+		//cria os objetos 'ItemPedido'
+		ItemPedido itemped1 = new ItemPedido(ped1, prod1, 0.00, 1, 2000.00);
+		ItemPedido itemped2 = new ItemPedido(ped1, prod3, 0.00, 2, 80.00);
+		ItemPedido itemped3 = new ItemPedido(ped2, prod2, 100.00, 1, 800.00);
+		ItemPedido itemped4 = new ItemPedido(ped3, prod3, 55.00, 5, 400.00);
+		ItemPedido itemped5 = new ItemPedido(ped3, prod4, 185.56, 1, 750.00);
+		
+		// associa os 'ItemPedido' ao 'Pedido'
+		ped1.getItens().addAll(Arrays.asList(itemped1, itemped2));
+		ped2.getItens().addAll(Arrays.asList(itemped3));
+		ped3.getItens().addAll(Arrays.asList(itemped4, itemped5));
+		
+		// associa os 'ItemPedido' ao 'Produto'
+		prod1.getItens().addAll(Arrays.asList(itemped1));
+		prod2.getItens().addAll(Arrays.asList(itemped3));
+		prod3.getItens().addAll(Arrays.asList(itemped2, itemped4));
+		prod4.getItens().addAll(Arrays.asList(itemped5));
+		
+		//após criar o repository
+		//adiciona uma lista de 'Pedido' no BD usando seu repository
+		itemPedidoRepository.saveAll(Arrays.asList(itemped1, itemped2, itemped3, itemped4, itemped5));
 	}
 }
