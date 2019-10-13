@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Endereco implements Serializable{
@@ -25,7 +25,7 @@ public class Endereco implements Serializable{
 	private String bairro;
 	private String cep;
 	
-	@JsonBackReference // trata referência cíclica (não mostra os clientes para 1 endereço)
+	@JsonIgnore // trata referência cíclica (não mostra os clientes para 1 endereço)
 	@ManyToOne
 	@JoinColumn(name="cliente_id") // este é o nome do campo que será criado no BD
 	private Cliente cliente;

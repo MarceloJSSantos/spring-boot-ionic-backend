@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Pedido implements Serializable{
@@ -30,11 +29,9 @@ public class Pedido implements Serializable{
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date instante;
 	
-	@JsonManagedReference // trata referência cíclica (mostra os endereços para 1 cliente)
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
 	
-	@JsonManagedReference // trata referência cíclica (mostra os itens para 1 pedido)
 	@OneToMany(mappedBy = "id.pedido") // atenção classe auxiliar
 	private Set<ItemPedido> itens = new HashSet<>();
 	
@@ -42,7 +39,6 @@ public class Pedido implements Serializable{
 	@JoinColumn(name="endereco_de_entrega_id")
 	private Endereco enderecoDeEntrega;
 	
-	@JsonManagedReference // trata referência cíclica (mostra os endereços para 1 cliente)
 	@ManyToOne
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
@@ -103,7 +99,7 @@ public class Pedido implements Serializable{
 	public Set<ItemPedido> getItens() {
 		return itens;
 	}
-	//Pedido
+	
 	public void setItens(Set<ItemPedido> itens) {
 		this.itens = itens;
 	}
