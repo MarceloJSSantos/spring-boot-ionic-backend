@@ -18,10 +18,10 @@ public class ClienteResource {
 	private ClienteService serviceCliente;
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> busca_id(@PathVariable Integer id) {
+	public ResponseEntity<Cliente> find(@PathVariable Integer id) {
 		
 		//criamos um obj. categoria que recebe a categoria do método buscar no service
-		Cliente objCliente = serviceCliente.buscar(id);
+		Cliente objCliente = serviceCliente.find(id);
 		
 		// retorna um objeto
 		return ResponseEntity.ok().body(objCliente);
