@@ -65,6 +65,16 @@ public class CursomcApplication implements CommandLineRunner {
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
 		Categoria cat3 = new Categoria(null, "Saúde");
+		//categias instanciadas para pagerequest
+		Categoria cat4 = new Categoria(null, "Cama, Mesa e Banho");
+		Categoria cat5 = new Categoria(null, "Cozinha");
+		Categoria cat6 = new Categoria(null, "Banheiro");
+		Categoria cat7 = new Categoria(null, "Sala de Jantar");
+		Categoria cat8 = new Categoria(null, "Sala de Estar");
+		Categoria cat9 = new Categoria(null, "Oficina");
+		Categoria cat10 = new Categoria(null, "Jardinagem");
+		Categoria cat11 = new Categoria(null, "Diversos");
+		Categoria cat12 = new Categoria(null, "Recepção");
 		
 		// cria os objetos 'Produto'
 		Produto prod1 = new Produto(null, "Computador", 2000.00);
@@ -85,7 +95,8 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		//após criar o repository
 		//adiciona uma lista de 'Categoria' no BD usando seu repository
-		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6,
+												  cat7, cat8, cat9, cat10, cat11, cat12));
 		
 		//após criar o repository
 		//adiciona uma lista de 'Produto' no BD usando seu repository
