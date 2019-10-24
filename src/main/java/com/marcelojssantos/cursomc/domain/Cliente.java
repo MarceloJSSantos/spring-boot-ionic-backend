@@ -61,7 +61,9 @@ public class Cliente implements Serializable{
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipoCliente = (tipoCliente == null) ? null : tipoCliente.getCod(); //adequado para uso do Enum
+		//adequado para uso do Enum
+		//adequado para o recebimento de um objeto 'null'
+		this.tipoCliente = (tipoCliente == null) ? null : tipoCliente.getCod();
 	}
 
 	//métodos getters e setters
