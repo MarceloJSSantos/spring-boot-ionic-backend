@@ -59,7 +59,7 @@ public class ClienteService {
 		}
 		catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityVolationException(
-					"Não é possível excluir um Cliente que possua Entidades associadas a ele!");
+					"Não é possível excluir este Cliente porque há Pedidos associados a ele!");
 		}
 	}
 	

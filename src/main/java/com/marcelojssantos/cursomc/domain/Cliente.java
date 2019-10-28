@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -32,7 +33,8 @@ public class Cliente implements Serializable{
 	
 	//'Cliente' tem vários 'Enderecos' (por isso 'List<Endereco>')
 	//por fim instanciamos com a implementação de um 'ArrayList<>()'
-	@OneToMany(mappedBy = "cliente")
+	//cascade = CascadeType.ALL para ao exluir um cliente, exclua também os endereços associados a ele
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	/*
