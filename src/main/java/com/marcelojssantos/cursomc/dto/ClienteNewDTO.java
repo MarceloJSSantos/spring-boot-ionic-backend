@@ -2,24 +2,50 @@ package com.marcelojssantos.cursomc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.marcelojssantos.cursomc.services.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	//atributos do 'Cliente'
+	@NotEmpty(message = "Preenchimento obrigatório.")
+	@Length(min = 5, max = 200, message = "O valor deve ser entre 5 e 200 caracteres.")
 	private String nome;
+	
+	@NotEmpty(message = "Preenchimento obrigatório.")
+	@Email(message = "Não é um e-mail válido.")
 	private String email;
+	
+	@NotEmpty(message = "Preenchimento obrigatório.")
 	private String cpfOuCnpj;
+	
 	private Integer tipoCliente; //adequado para uso do Enum
 	
 	//atributos do 'Endereço'
+	@NotEmpty(message = "Preenchimento obrigatório.")
 	private String logradouro;
+	
+	@NotEmpty(message = "Preenchimento obrigatório.")
 	private String numero;
+	
 	private String complemneto;
+	
+	@NotEmpty(message = "Preenchimento obrigatório.")
 	private String bairro;
+	
+	@NotEmpty(message = "Preenchimento obrigatório.")
 	private String cep;
 	
 	//telefones (1 obrigatório + 2 opcionais)
+	@NotEmpty(message = "Preenchimento obrigatório.")
 	private String telefone1;
+	
 	private String telefone2;
 	private String telefone3;
 	
