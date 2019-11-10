@@ -64,43 +64,60 @@ public class CursomcApplication implements CommandLineRunner {
 		// cria os objetos 'Categoria'
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
-		Categoria cat3 = new Categoria(null, "Saúde");
-		//categias instanciadas para pagerequest
-		Categoria cat4 = new Categoria(null, "Cama, Mesa e Banho");
-		Categoria cat5 = new Categoria(null, "Cozinha");
-		Categoria cat6 = new Categoria(null, "Banheiro");
-		Categoria cat7 = new Categoria(null, "Sala de Jantar");
-		Categoria cat8 = new Categoria(null, "Sala de Estar");
-		Categoria cat9 = new Categoria(null, "Oficina");
-		Categoria cat10 = new Categoria(null, "Jardinagem");
-		Categoria cat11 = new Categoria(null, "Diversos");
-		Categoria cat12 = new Categoria(null, "Recepção");
+		Categoria cat3 = new Categoria(null, "Cama, Mesa e Banho");
+		Categoria cat4 = new Categoria(null, "Eletrônicos");
+		Categoria cat5 = new Categoria(null, "Jardinagem");
+		Categoria cat6 = new Categoria(null, "Decoração");
+		Categoria cat7 = new Categoria(null, "Perfumaria");
+		Categoria cat8 = new Categoria(null, "Saúde");
 		
 		// cria os objetos 'Produto'
 		Produto prod1 = new Produto(null, "Computador", 2000.00);
 		Produto prod2 = new Produto(null, "Impressora", 800.00);
 		Produto prod3 = new Produto(null, "Mouse", 80.00);
-		Produto prod4 = new Produto(null, "Estetoscópio", 750.00);
+		Produto prod4 = new Produto(null, "Mesa de Escritáorio", 300.00);
+		Produto prod5 = new Produto(null, "Toalha", 50.00);
+		Produto prod6 = new Produto(null, "Colcha", 200.00);
+		Produto prod7 = new Produto(null, "TV true color", 1200.00);
+		Produto prod8 = new Produto(null, "Roçadeira", 800.00);
+		Produto prod9 = new Produto(null, "Abajour", 100.00);
+		Produto prod10 = new Produto(null, "Pendente", 180.00);
+		Produto prod11 = new Produto(null, "Shampoo", 90.00);
+		Produto prod12 = new Produto(null, "Estetostópico", 820.39);
 		
 		// associa as 'Categoria' a seus 'Produto'
 		cat1.getProdutos().addAll(Arrays.asList(prod1, prod2, prod3));
-		cat2.getProdutos().addAll(Arrays.asList(prod2));
-		cat3.getProdutos().addAll(Arrays.asList(prod4));
+		cat2.getProdutos().addAll(Arrays.asList(prod2, prod4));
+		cat3.getProdutos().addAll(Arrays.asList(prod5, prod6));
+		cat4.getProdutos().addAll(Arrays.asList(prod1, prod2, prod3, prod7));
+		cat5.getProdutos().addAll(Arrays.asList(prod8));
+		cat6.getProdutos().addAll(Arrays.asList(prod9, prod10));
+		cat7.getProdutos().addAll(Arrays.asList(prod11));
+		cat8.getProdutos().addAll(Arrays.asList(prod12));
 		
 		// associa os 'Produto' as suas 'Categoria'
-		prod1.getCategorias().addAll(Arrays.asList(cat1));
-		prod2.getCategorias().addAll(Arrays.asList(cat1, cat2));
-		prod3.getCategorias().addAll(Arrays.asList(cat1));
-		prod4.getCategorias().addAll(Arrays.asList(cat3));
+		prod1.getCategorias().addAll(Arrays.asList(cat1, cat4));
+		prod2.getCategorias().addAll(Arrays.asList(cat1, cat2, cat4));
+		prod3.getCategorias().addAll(Arrays.asList(cat1,cat4));
+		prod4.getCategorias().addAll(Arrays.asList(cat2));
+		prod5.getCategorias().addAll(Arrays.asList(cat3));
+		prod6.getCategorias().addAll(Arrays.asList(cat3));
+		prod7.getCategorias().addAll(Arrays.asList(cat4));
+		prod8.getCategorias().addAll(Arrays.asList(cat5));
+		prod9.getCategorias().addAll(Arrays.asList(cat6));
+		prod10.getCategorias().addAll(Arrays.asList(cat6));
+		prod11.getCategorias().addAll(Arrays.asList(cat7));
+		prod12.getCategorias().addAll(Arrays.asList(cat8));
 		
 		//após criar o repository
 		//adiciona uma lista de 'Categoria' no BD usando seu repository
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6,
-												  cat7, cat8, cat9, cat10, cat11, cat12));
+												  cat7, cat8));
 		
 		//após criar o repository
 		//adiciona uma lista de 'Produto' no BD usando seu repository
-		produtoRepository.saveAll(Arrays.asList(prod1,prod2,prod3,prod4));
+		produtoRepository.saveAll(Arrays.asList(prod1, prod2, prod3, prod4, prod5, prod6,
+												prod7, prod8, prod9, prod10, prod11, prod12));
 		
 		//cria os objetos 'Estado'
 		Estado est1 = new Estado(null, "Minas Gerais");
