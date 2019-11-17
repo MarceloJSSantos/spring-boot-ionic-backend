@@ -70,13 +70,22 @@ public class ItemPedido implements Serializable{
 	}
 	
 	@JsonIgnore //ignora os pedidos de itens ao serializar
-	//só getters do 'Pedido' e 'Produto'
+	//só getters do 'Pedido' e 'Produto' inicialmente
+	//depois os sets
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
 	
+	public void setPedido(Pedido pedido) {
+		id.setPedido(pedido);
+	}
+	
 	public Produto getProduto() {
 		return id.getProduto();
+	}
+	
+	public void setProduto(Produto produto) {
+		id.setProduto(produto);
 	}
 
 	@Override

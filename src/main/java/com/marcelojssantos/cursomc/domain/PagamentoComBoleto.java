@@ -5,9 +5,11 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.marcelojssantos.cursomc.domain.enums.EstadoPagamento;
 
 @Entity
+@JsonTypeName("pagamentoComBoleto")
 public class PagamentoComBoleto extends Pagamento  {
 	//nas subclass só tem essa linha, não o 'implements Serializable{'
 	private static final long serialVersionUID = 1L;
