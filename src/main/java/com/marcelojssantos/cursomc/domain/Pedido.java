@@ -29,21 +29,21 @@ public class Pedido implements Serializable{
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date instante;
 	
+	@ManyToOne
+	@JoinColumn(name="cliente_id")
+	private Cliente cliente;
+	
+	@ManyToOne //mesmo o 'Endereco' não conhecendo o pedido
+	@JoinColumn(name="endereco_de_entrega_id")
+	private Endereco enderecoDeEntrega;
+	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
 	
 	@OneToMany(mappedBy = "id.pedido") // atenção classe auxiliar
 	private Set<ItemPedido> itens = new HashSet<>();
 	
-	@ManyToOne //mesmo o 'Endereco' não conhecendo o pedido
-	@JoinColumn(name="endereco_de_entrega_id")
-	private Endereco enderecoDeEntrega;
-	
-	@ManyToOne
-	@JoinColumn(name="cliente_id")
-	private Cliente cliente;
-	
-	//contrutores
+	//construtores
 	public Pedido() {
 	}
 
@@ -53,6 +53,15 @@ public class Pedido implements Serializable{
 		this.instante = instante;
 		this.enderecoDeEntrega = enderecoDeEntrega;
 		this.cliente = cliente;
+	}
+	
+	//retorna o total de um pedido, usado prefixo 'get' para o framework serializar o método
+	public double getValorTotal() {
+		double soma = 0;
+		for (ItemPedido ip : itens) {
+			soma = soma + ip.getSubTotal();
+		}
+		return soma;
 	}
 
 	//métodos getters e setters
