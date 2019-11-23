@@ -2,7 +2,6 @@ package com.marcelojssantos.cursomc.services;
 
 import java.util.Date;
 import java.util.Optional;
-import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
